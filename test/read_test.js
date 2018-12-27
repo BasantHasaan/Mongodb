@@ -6,16 +6,20 @@ describe('Reading user out of the database', ()=>{
     beforeEach((done)=>{
         basant = new User({name:'basant'});
         basant.save()
-            .then(()=>{
-                done();
-            })
+            .then(()=>done())
 
     })
     it('find all user with name of basant', (done) => {
         User.find({name:'basant'})
             .then((users)=>{
-                console.log(typeof(users[0]._id),"object");
                 assert(users[0]._id.toString() === basant._id.toString())
+                done();
+            });
+    })
+    it('find a user with practicular id', (done) => {
+        User.findOne({_id: basant._id})
+            .then((user)=>{
+                assert(user.name === 'basant')
                 done();
             });
     })
